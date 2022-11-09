@@ -52,7 +52,7 @@ namespace Ruby
         private void Form1_Load(object sender, EventArgs e)
         {
             videoSourcePlayer1.Visible = false;
-            btn_apagar.Enabled = false;btn_desact_rostro.Enabled = false;btn_detector_mov.Enabled = false;btn_desactivar_mov.Enabled = false;photo.Enabled = false;btn_save_web.Enabled = false;
+            btn_apagar.Enabled = false;btn_desact_rostro.Enabled = false;btn_detector_mov.Enabled = false;btn_desactivar_mov.Enabled = false;photo.Enabled = false;
             motionDetector = new MotionDetector(new TwoFramesDifferenceDetector(), new MotionBorderHighlighting());
             NivelDeDeteccion = 0;
             filter = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -586,7 +586,7 @@ namespace Ruby
 
         private void btn_activar_Click(object sender, EventArgs e)
         {
-            btn_apagar.Enabled = true;photo.Enabled = true;btn_save_web.Enabled = true;btn_rostro.Enabled = false;btn_desact_rostro.Enabled = false;btn_detector_mov.Enabled = true;btn_desactivar_mov.Enabled = true;
+            btn_apagar.Enabled = true;photo.Enabled = true;btn_rostro.Enabled = false;btn_desact_rostro.Enabled = false;btn_detector_mov.Enabled = true;btn_desactivar_mov.Enabled = true;
             CerrarWebCam();
             int i = cb_webcam.SelectedIndex;
             string NombreVideo = MisDispositivos[i].MonikerString;
@@ -600,7 +600,7 @@ namespace Ruby
             CerrarWebCam();
             pb_camara_actual.Image = null;
             btn_activar.Enabled = true;
-            btn_desactivar_mov.Enabled = false;btn_detector_mov.Enabled = false;btn_desactivar_mov.Enabled = false;btn_apagar.Enabled = false;photo.Enabled = false;btn_save_web.Enabled = false;btn_rostro.Enabled = true;btn_desact_rostro.Enabled = false;
+            btn_desactivar_mov.Enabled = false;btn_detector_mov.Enabled = false;btn_desactivar_mov.Enabled = false;btn_apagar.Enabled = false;photo.Enabled = false;btn_rostro.Enabled = true;btn_desact_rostro.Enabled = false;
         }
 
         private void photo_Click(object sender, EventArgs e)
@@ -696,6 +696,17 @@ namespace Ruby
 
         private void btn_pause_Click(object sender, EventArgs e)
         { videoload = false;   }
+
+        private void btn_save_web_Click(object sender, EventArgs e)
+        {
+            if (pb_camara_resultado.Image != null)
+            {
+                pb_camara_resultado.Image.Save(pathImages + "LaChidaFotoWebConFiltro.jpg", ImageFormat.Jpeg);
+                MessageBox.Show("Imagen guardada", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            { MessageBox.Show("No hay nada para guardar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
 
         private void btn_desactivar_mov_Click(object sender, EventArgs e)
         {videoSourcePlayer1.Visible = false;videoSourcePlayer1.Stop();  MiwebCam.Start();}

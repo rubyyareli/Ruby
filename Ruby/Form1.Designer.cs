@@ -62,6 +62,7 @@ namespace Ruby
             this.pb_camara_resultado = new System.Windows.Forms.PictureBox();
             this.pb_camara_actual = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btn_pause = new System.Windows.Forms.Button();
             this.btn_delete_video = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.btn_video = new System.Windows.Forms.Button();
@@ -97,7 +98,9 @@ namespace Ruby
             this.btn_archivo = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.pb_imagen_original = new System.Windows.Forms.PictureBox();
-            this.btn_pause = new System.Windows.Forms.Button();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_camara_resultado)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_camara_actual)).BeginInit();
@@ -245,6 +248,7 @@ namespace Ruby
             this.btn_save_web.TabIndex = 189;
             this.btn_save_web.Text = "Guardar";
             this.btn_save_web.UseVisualStyleBackColor = false;
+            this.btn_save_web.Click += new System.EventHandler(this.btn_save_web_Click);
             // 
             // label15
             // 
@@ -606,6 +610,23 @@ namespace Ruby
             this.tabPage2.Text = "    Editar video    ";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btn_pause
+            // 
+            this.btn_pause.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(112)))), ((int)(((byte)(152)))));
+            this.btn_pause.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_pause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_pause.Font = new System.Drawing.Font("Waltograph UI", 8.099999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_pause.ForeColor = System.Drawing.Color.White;
+            this.btn_pause.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btn_pause.Location = new System.Drawing.Point(1073, 1397);
+            this.btn_pause.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btn_pause.Name = "btn_pause";
+            this.btn_pause.Size = new System.Drawing.Size(60, 60);
+            this.btn_pause.TabIndex = 194;
+            this.btn_pause.Text = "⏸";
+            this.btn_pause.UseVisualStyleBackColor = false;
+            this.btn_pause.Click += new System.EventHandler(this.btn_pause_Click);
+            // 
             // btn_delete_video
             // 
             this.btn_delete_video.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(112)))), ((int)(((byte)(152)))));
@@ -799,6 +820,9 @@ namespace Ruby
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label28);
+            this.tabPage1.Controls.Add(this.label29);
+            this.tabPage1.Controls.Add(this.label30);
             this.tabPage1.Controls.Add(this.btn_delete_imagen);
             this.tabPage1.Controls.Add(this.label27);
             this.tabPage1.Controls.Add(this.label26);
@@ -1109,22 +1133,44 @@ namespace Ruby
             this.pb_imagen_original.TabIndex = 168;
             this.pb_imagen_original.TabStop = false;
             // 
-            // btn_pause
+            // label28
             // 
-            this.btn_pause.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(112)))), ((int)(((byte)(152)))));
-            this.btn_pause.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_pause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_pause.Font = new System.Drawing.Font("Waltograph UI", 8.099999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_pause.ForeColor = System.Drawing.Color.White;
-            this.btn_pause.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btn_pause.Location = new System.Drawing.Point(1073, 1397);
-            this.btn_pause.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
-            this.btn_pause.Name = "btn_pause";
-            this.btn_pause.Size = new System.Drawing.Size(60, 60);
-            this.btn_pause.TabIndex = 194;
-            this.btn_pause.Text = "⏸";
-            this.btn_pause.UseVisualStyleBackColor = false;
-            this.btn_pause.Click += new System.EventHandler(this.btn_pause_Click);
+            this.label28.AutoSize = true;
+            this.label28.BackColor = System.Drawing.Color.Transparent;
+            this.label28.Font = new System.Drawing.Font("Waltograph UI", 14.1F, System.Drawing.FontStyle.Bold);
+            this.label28.ForeColor = System.Drawing.Color.Blue;
+            this.label28.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label28.Location = new System.Drawing.Point(2903, 773);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(58, 53);
+            this.label28.TabIndex = 195;
+            this.label28.Text = "b";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.BackColor = System.Drawing.Color.Transparent;
+            this.label29.Font = new System.Drawing.Font("Waltograph UI", 14.1F, System.Drawing.FontStyle.Bold);
+            this.label29.ForeColor = System.Drawing.Color.Green;
+            this.label29.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label29.Location = new System.Drawing.Point(2903, 462);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(55, 53);
+            this.label29.TabIndex = 194;
+            this.label29.Text = "g";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.BackColor = System.Drawing.Color.Transparent;
+            this.label30.Font = new System.Drawing.Font("Waltograph UI", 14.1F, System.Drawing.FontStyle.Bold);
+            this.label30.ForeColor = System.Drawing.Color.Red;
+            this.label30.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label30.Location = new System.Drawing.Point(2903, 148);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(53, 53);
+            this.label30.TabIndex = 193;
+            this.label30.Text = "r";
             // 
             // Form1
             // 
@@ -1226,6 +1272,9 @@ namespace Ruby
         private System.Windows.Forms.Button btn_delete_video;
         private System.Windows.Forms.Button btn_delete_web;
         private System.Windows.Forms.Button btn_pause;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label30;
     }
 }
 
