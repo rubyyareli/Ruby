@@ -45,7 +45,7 @@ namespace Ruby
         Image<Bgr, byte> imgInput;
         String countFaces;
         static readonly CascadeClassifier cascadeClassifier = new CascadeClassifier("haarcascade_frontalface_alt_tree.xml");
-
+        Image img;
         public Form1()
         {InitializeComponent();}
 
@@ -464,6 +464,7 @@ namespace Ruby
                 pb_imagen_original.SizeMode = PictureBoxSizeMode.Zoom;
                 pb_imagen_resultado.Image = new Bitmap(file.FileName);
                 pb_imagen_resultado.SizeMode = PictureBoxSizeMode.Zoom;
+                //img = pb_imagen_resultado.Image;
                 txtruta.Text = file.FileName;
                 MessageBox.Show("Imagen cargada", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 MessageBox.Show("Cargando histogramas", "Espere por favor", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -517,6 +518,7 @@ namespace Ruby
                 MessageBox.Show("Cargando histogramas", "Espere por favor", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 setHistogramas(getHistogramaRed((Bitmap)pb_imagen_resultado.Image), getHistogramaGreen((Bitmap)pb_imagen_resultado.Image), getHistogramaBlue((Bitmap)pb_imagen_resultado.Image));
                 MessageBox.Show("Histogramas cargados", "Listo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                img = pb_imagen_resultado.Image;
             }
             else
             { MessageBox.Show("No hay una imagen para aplicar el filtro ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);}
@@ -601,12 +603,17 @@ namespace Ruby
 
         private void btn_save_imagen_Click(object sender, EventArgs e)
         {
-            if (pb_imagen_resultado.Image != null)
-            {   pb_imagen_resultado.Image.Save(pathImages + "LaChidaFotoConFiltro.jpg", ImageFormat.Jpeg);
+            SaveFileDialog sf = new SaveFileDialog();
+            sf.Filter = "JPG(*.jpg; *.jpeg; *.bmp; *.png)|*.jpg; *.jpeg; *.bmp; *.png";
+
+            if (sf.ShowDialog() == DialogResult.OK)
+            {
+                img.Save(sf.FileName);
                 MessageBox.Show("Imagen guardada", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
-            {MessageBox.Show("No hay nada para guardar ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            { MessageBox.Show("No se ha guardado nada ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+
         }
 
         private void btn_activar_Click(object sender, EventArgs e)
