@@ -56,10 +56,10 @@ namespace Ruby
             motionDetector = new MotionDetector(new TwoFramesDifferenceDetector(), new MotionBorderHighlighting());
             NivelDeDeteccion = 0;
             filter = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            foreach(FilterInfo device in filter)
-                cb_webcam.Items.Add(device.Name);
-                cb_webcam.SelectedIndex = 0;
-                device = new VideoCaptureDevice();
+            foreach (FilterInfo device in filter)
+                comboBox1.Items.Add(device.Name);
+            comboBox1.SelectedIndex = 0;
+            device = new VideoCaptureDevice();
             CargarDispositivos();
         }
 
@@ -300,6 +300,33 @@ namespace Ruby
                     }
             }
         }
+        private void CargarVideopequeno(object sender, EventArgs e)
+        {
+            if (FrameCount < duracion - 2)
+            {
+                Mat m = new Mat();
+                videocapture.Read(m);
+
+                currentFrame = new Image<Bgr, byte>(m.Bitmap);
+                //currentFrame.Resize(pictureBox1.Width, pictureBox1.Height, Inter.Cubic);
+                FrameCount = videocapture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames);
+            }
+            else
+            {
+                FrameCount = 0;
+                videocapture.SetCaptureProperty(CapProp.PosFrames, 0);
+            }
+            switch (filterName)
+            {
+                default:
+                    {
+                        pb_video_original.Image = currentFrame.Bitmap;
+                        break;
+                    }
+            }
+
+        }
+
         private void setHistogramas(int[] pRedC, int[] pGreenC, int[] pBlueC)
         {
             histogramaRed.Values = pRedC;
@@ -419,11 +446,9 @@ namespace Ruby
                     {
                         graphics.DrawRectangle(pen, face);
                         graphics.DrawString("Rostro" + i, font, solidBrush, face.Location);
-
                     }
                 }
             }
-
             //pictureBox1.Image = bitmap;
             pb_camara_actual.Image = bitmap;
         }
@@ -567,7 +592,7 @@ namespace Ruby
         private void btn_play_Click(object sender, EventArgs e)
         {
             if (videoload)
-            { Application.Idle += new EventHandler(CargarVideo);}
+            { Application.Idle += new EventHandler(CargarVideo); Application.Idle += new EventHandler(CargarVideopequeno); }
             
             else
             { MessageBox.Show("No se carga el video", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);}
@@ -607,8 +632,9 @@ namespace Ruby
         {
             if (MiwebCam != null && MiwebCam.IsRunning)
             {  pb_camara_resultado.Image = pb_camara_actual.Image;
-               pb_camara_actual.Image = pb_camara_resultado.Image;
-               imageClean = (Bitmap)pb_camara_resultado.Image;
+                pb_camara_actual.Image = pb_camara_resultado.Image;
+                pb_camara.Image = pb_camara_resultado.Image;
+                imageClean = (Bitmap)pb_camara_resultado.Image;
             }
             MessageBox.Show("Foto tomada......cargando histogramas", "Espere por favor", MessageBoxButtons.OK, MessageBoxIcon.Information);
             setHistogramas1(getHistogramaRed((Bitmap)pb_camara_resultado.Image), getHistogramaGreen((Bitmap)pb_camara_resultado.Image), getHistogramaBlue((Bitmap)pb_camara_resultado.Image));
@@ -651,7 +677,7 @@ namespace Ruby
                         break;
 
                     default:
-                        //pb_camara_resultado.Image = pb_camara.Image;
+                        pb_camara_resultado.Image = pb_camara.Image;
                         MessageBox.Show("Filtro (s) eliminado (s)", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         break;
                 }
@@ -673,23 +699,24 @@ namespace Ruby
         private void btn_rostro_Click(object sender, EventArgs e)
         {
             btn_apagar.Enabled = false;btn_activar.Enabled = false;btn_desact_rostro.Enabled = true;
-            device = new VideoCaptureDevice(filter[cb_webcam.SelectedIndex].MonikerString);
+            device = new VideoCaptureDevice(filter[comboBox1.SelectedIndex].MonikerString);
             device.NewFrame += Device_NewFrame;
             device.Start();
         }
 
         private void btn_desact_rostro_Click(object sender, EventArgs e)
-        { if (device.IsRunning)
+        {
+            if (device.IsRunning)
                 device.Stop();
             pb_camara_actual.Image = null;
             btn_activar.Enabled = true;btn_apagar.Enabled = false;btn_desact_rostro.Enabled = false;
         }
 
         private void btn_delete_imagen_Click(object sender, EventArgs e)
-        {pb_imagen_original.Image = null;pb_imagen_resultado.Image = null;}
+        {pb_imagen_original.Image = null;pb_imagen_resultado.Image = null;txtruta.Text=null;}
 
         private void btn_delete_video_Click(object sender, EventArgs e)
-        {pb_video_original.Image = null;pb_video_resultado.Image = null;}
+        {pb_video_original.Image = null;pb_video_resultado.Image = null;tb_ruta_Video.Text = null;}
 
         private void btn_delete_web_Click(object sender, EventArgs e)
         {pb_camara_resultado.Image = null;}
